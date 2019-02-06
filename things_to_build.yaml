@@ -71,6 +71,14 @@ simp-tpm2-tools:
 #     public review, including changes to TPM2_CreateLoaded and
 #     TPM2_EncryptDecrypt.
 #
+# Build 1332 Includes:
+#   * SIMULATON is disabled by default, so each new NVChip yields new random seeds
+#   * SHA-512 is supported
+#   * Supports 7 evict objects to agree with PC Client standard
+#   * Added support for IPv6, but it has not been tested. Please report success or bugs.
+#   * Updated with TPM specification rev 149 bug fixes.
+#   * fflush() added after fwrite() everywhere to ensure NV is weritten before a Ctrl-C#
+
 # See:
 #   * https://sourceforge.net/p/ibmswtpm2/wiki/Home/ (changelog)
 #   * https://github.com/tpm2-software/tpm2-tools/wiki/Getting-Started#tpm-dependency
@@ -78,7 +86,7 @@ simp-tpm2-tools:
 simp-tpm2-simulator:
   :type: :targz
   :build: 'yes'
-  :version: '1119'
+  :version: '1332'
   :url: https://sourceforge.net/projects/ibmswtpm2/files/ibmtpm%{VERSION}.tar.gz/download
   :extras:
     :post_dl:

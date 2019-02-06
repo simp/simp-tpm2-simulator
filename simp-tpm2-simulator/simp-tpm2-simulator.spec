@@ -1,5 +1,5 @@
 Name: simp-tpm2-simulator
-Version: 1119.0.0
+Version: 1332.0.0
 Release: 0%{?dist}
 Summary: The IBM TPM2.0 simulator
 
@@ -60,6 +60,9 @@ exit 0
 %systemd_postun %{_name}.serivce
 
 %changelog
+* Mon Dec 24 2018 Michael Morrone <michael.morrone@onyxpoint.com> - 3.1.0
+- Updated for new upstream release
+
 * Mon Apr 9 2018 Chris Tessmer <chris.tessmer@onyxpoint.com> - 3.0.3-3
 - Tweak RPM for building EL7 RPMs
 
