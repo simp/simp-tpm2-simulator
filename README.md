@@ -54,5 +54,5 @@ To initialize and use the TPM simulator, issue the following commands:
 ```
 
 [simp]: https://github.com/NationalSecurityAgency/SIMP/
-[jira]: https://simp-project.atlassian.net/
+[simp-jira]: https://simp-project.atlassian.net/
 
