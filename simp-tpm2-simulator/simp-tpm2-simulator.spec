@@ -1,17 +1,19 @@
 Name: simp-tpm2-simulator
 Version: 1332.0.0
 Release: 0%{?dist}
-Summary: The IBM TPM2.0 simulator
+Summary: The SIMP IBM TPM 2.0 simulator
 
 # SIMP customization:
 %global _prefix /usr/local
 %global _name tpm2-simulator
 
-License: BSD
-URL:     https://sourceforge.net/projects/ibmswtpm2/
+License: ASL 2.0 and BSD
+URL:     https://github.com/simp/simp-tpm12-simulator
+###https://sourceforge.net/projects/ibmswtpm2/
 ###https://sourceforge.net/projects/ibmswtpm2/files/ibmtpm%%{version}.tar.gz/download
 Source0: %{name}-%{version}.tar.gz
 Source1: %{name}.service
+Source2: LICENSE
 
 BuildRequires: gcc-c++
 
@@ -28,15 +30,18 @@ This version has been packaged by the SIMP team for %{dist}
 %build
 cd src/
 %make_build
+cat %{SOURCE2} > ../LICENSE
 
 %install
 install -m 0755 -D src/tpm_server %{buildroot}%{_bindir}/%{_name}
 install -m 0644 -D %{SOURCE1}     %{buildroot}%{_unitdir}/%{_name}.service
 
 %files
-%doc ibmtpm.doc
 %license LICENSE
+#BSD
+%doc ibmtpm.doc
 %{_bindir}/%{_name}
+#ASL 2.0
 %{_unitdir}/%{_name}.service
 
 
@@ -60,7 +65,10 @@ exit 0
 %systemd_postun %{_name}.serivce
 
 %changelog
-* Mon Dec 24 2018 Michael Morrone <michael.morrone@onyxpoint.com> - 3.1.0
+* Wed Feb 6 2019 Michael Morrone <michael.morrone@onyxpoint.com> - 3.1.0-1
+- Updated for release to SIMP Project
+
+* Mon Dec 24 2018 Michael Morrone <michael.morrone@onyxpoint.com> - 3.1.0-0
 - Updated for new upstream release
 
 * Mon Apr 9 2018 Chris Tessmer <chris.tessmer@onyxpoint.com> - 3.0.3-3
