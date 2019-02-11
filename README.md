@@ -1,34 +1,72 @@
 ## simp-tpm2-simulator
 
+<!-- vim-markdown-toc GFM -->
 
-## Description
+* [Overview](#overview)
+  * [This is a SIMP project](#this-is-a-simp-project)
+* [Setup](#setup)
+  * [Requirements](#requirements)
+  * [Building the `simp-tpm2-simulator` RPM](#building-the-simp-tpm2-simulator-rpm)
+  * [Beginning with simp-tpm2-simulator](#beginning-with-simp-tpm2-simulator)
+* [Usage](#usage)
+* [Development](#development)
 
-This project builds and packages newer versions of TPM 2.0 simulator for testing
-purposes.  It is a repackage of the upstream IBM's Software TPM 2.0 source code.
+<!-- vim-markdown-toc -->
+
+## Overview
+
+Rake and config files to build/package newer versions of the [IBM TPM 2.0
+simulator][ibmswtpm2] as an EL7 RPM.
 
 ### This is a SIMP project
 
-This module is a component of the [System Integrity Management
-Platform][simp]
-a compliance-management framework built on Puppet.
+This module is a (development) component of the [System Integrity Management
+Platform][simp], a compliance-management framework built on Puppet.
 
 If you find any issues, please submit them to our [bug tracker][simp-jira].
 
 ## Setup
 
-### Setup Requirements
+### Requirements
 
-The TPM 2.0 simulator requires EL7. To build rpm files to install the TPM 2.0 
-simulator, install this package and update the configuration files, namely
-`things_to_build.yaml` and `simp-tpm2-simulator.spec`, as necessary.  Then build
-and package the simulator with the command `bundle exec rake pkg:rpm` from with
-the simp-tpm2-simulator directory.
+The TPM 2.0 simulator build process requires:
+
+* An EL7 host with:
+  - `rpm`
+  - `tar`
+  - `curl` (for direct downloads)
+  - `rpmbuild`
+* Ruby 2.1+ with RubyGems.
+* [bundler][bundler] 1.14+
+
+
+To build rpm files to install the TPM 2.0 simulator, install this package and
+update the configuration files, namely `things_to_build.yaml` and
+`simp-tpm2-simulator.spec`, as necessary.
+
+### Building the `simp-tpm2-simulator` RPM
+
+To build the `simp-tpm2-simulator` RPM:
+
+```sh
+# Use bundler to install all necessary gems (https://bundler.io)
+bundle install
+
+# change to the project directory:
+cd simp-tpm2-simulator/
+
+# Download source + build the RPM
+bundle exec rake pkg:rpm
+
+# The RPM will be in the dist/ directory
+ls -l dist/*.rpm
+```
 
 ### Beginning with simp-tpm2-simulator
 
 The TPM 2.0 simulator relies upon a few rpm packages which should be
 installed on any target system intended to use the module. The packages are
-tpm2-tools, tpm2-tss, and tpm2-abrmd, a suite of tools supporting the TPM 2.0. 
+tpm2-tools, tpm2-tss, and tpm2-abrmd, a suite of tools supporting the TPM 2.0.
 
 ## Usage
 
@@ -45,7 +83,7 @@ To initialize and use the TPM simulator, issue the following commands:
 
 ```yaml
 # runuser tpm2sim --shell /bin/sh -c "cd /tmp; nohup \
-  /usr/local/bin/tpm2-simulator &> /tmp/tpm2-simulator.log &" 
+  /usr/local/bin/tpm2-simulator &> /tmp/tpm2-simulator.log &"
 # mkdir -p /etc/systemd/system/tpm2-abrmd.service.d
 # printf "[Service]\nExecStart=\nExecStart=/sbin/tpm2-abrmd -t socket" \
   > /etc/systemd/system/tpm2-abrmd.service.d/override.conf
@@ -53,6 +91,9 @@ To initialize and use the TPM simulator, issue the following commands:
 # systemctl start tpm2-abrmd
 ```
 
-[simp]: https://github.com/NationalSecurityAgency/SIMP/
-[simp-jira]: https://simp-project.atlassian.net/
+## Development
 
+[bundler]:   https://bundler.io
+[simp]:      https://www.simp-project.com/
+[simp-jira]: https://simp-project.atlassian.net/
+[ibmswtpm2]: https://sourceforge.net/projects/ibmswtpm2/
