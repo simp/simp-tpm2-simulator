@@ -49,9 +49,8 @@
 #   * https://github.com/tpm2-software/tpm2-tools/wiki/Getting-Started#tpm-dependency
 #
 simp-tpm2-simulator:
-  :type: :targz
-  :build: 'yes'
-  :version: '1332'
+  :type: :targz    # download and untar
+  :version: '1332' # set %{VERSION}
   :url: https://sourceforge.net/projects/ibmswtpm2/files/ibmtpm%{VERSION}.tar.gz/download
   :extras:
     :post_dl:
