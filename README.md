@@ -35,7 +35,7 @@ The TPM 2.0 simulator build process requires:
   - `rpm`
   - `tar`
   - `curl` (for direct downloads)
-  - `rpmbuild`
+  - `rpm-build`
 * Ruby 2.1+ with RubyGems.
 * [bundler][bundler] 1.14+
 
