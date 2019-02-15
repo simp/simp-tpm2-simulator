@@ -93,6 +93,8 @@ To initialize and use the TPM simulator, issue the following commands:
 
 ## Development
 
+Please read our [Contribution Guide](http://simp-doc.readthedocs.io/en/stable/contributors_guide/index.html).
+
 [bundler]:   https://bundler.io
 [simp]:      https://www.simp-project.com/
 [simp-jira]: https://simp-project.atlassian.net/
