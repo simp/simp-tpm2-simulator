@@ -1,0 +1,59 @@
+# Handy substitutions:
+# --------------
+# %{PROJECT_DIR}  = the project directory (containing the spec file)
+# %{DOWNLOAD_DIR} = the directory that Source0 is downloaded into before tarring (dist/<name>-<version>/)
+# %{SOURCES_DIR}  = directory to stage "extra" source files/archive beyond Source0
+# %{VERSION}      = the value of :version
+#
+# Notes:
+#   :version
+#      Used to name the tarball and as the git tag
+#
+# TODO: Use :sources array for downloads instead of assuming DOWLOAD_DIR for Source0 and SOURCES_DIR for others
+#   :sources
+#     :type: :gitrepo
+#     :url:  xxxxx
+
+# TPM2.0 simulator
+# ----------------
+#
+# * The tpm2-tools group specifically recommend AGAINST risking a hardware TPM
+#   for development, testing, or learning―instead, they recommend using the
+#   TCG's reference TPM 2.0 simulator.
+# * IBM maintains a project that modifies the TCG's simulator source code
+#   (embedded in the TPM 2.0 specification docs) to build under Linux.
+# * The tpm2-tools project uses the IBM simulator to test their code.
+#
+# Build 974:
+#   * Is what tpm2-tools 3.0.* is tested against
+#   * TPM specification draft revision 142, with errata to revision 138.
+#
+# Build 1119 supports:
+#   * Nuvoton TPM vendor-specific commands
+#   * Support for OpenSSL 1.1.x
+#   * The TPM starts powered up, so the initial power up command is not necessary.
+#   * An update to TPM specification draft revision 146, which is avalable for
+#     public review, including changes to TPM2_CreateLoaded and
+#     TPM2_EncryptDecrypt.
+#
+# Build 1332 Includes:
+#   * SIMULATON is disabled by default, so each new NVChip yields new random seeds
+#   * SHA-512 is supported
+#   * Supports 7 evict objects to agree with PC Client standard
+#   * Added support for IPv6, but it has not been tested. Please report success or bugs.
+#   * Updated with TPM specification rev 149 bug fixes.
+#   * fflush() added after fwrite() everywhere to ensure NV is weritten before a Ctrl-C#
+
+# See:
+#   * https://sourceforge.net/p/ibmswtpm2/wiki/Home/ (changelog)
+#   * https://github.com/tpm2-software/tpm2-tools/wiki/Getting-Started#tpm-dependency
+#
+simp-tpm2-simulator:
+  :type: :targz    # download and untar
+  :version: '1332' # set %{VERSION}
+  :url: https://sourceforge.net/projects/ibmswtpm2/files/ibmtpm%{VERSION}.tar.gz/download
+  :extras:
+    :post_dl:
+      - cp -v '%{PROJECT_DIR}/simp-tpm2-simulator.service' '%{SOURCES_DIR}/'
+      - cp -v '%{PROJECT_DIR}/LICENSE' '%{SOURCES_DIR}/'
+
