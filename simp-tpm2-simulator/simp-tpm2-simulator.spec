@@ -1,3 +1,6 @@
+#Set the dist variable to be .el7 instead of default .el7.centos
+%define dist %{expand:%%(/usr/lib/rpm/redhat/dist.sh --dist)}
+
 Name: simp-tpm2-simulator
 Version: 1332.0.0
 Release: 0%{?dist}
