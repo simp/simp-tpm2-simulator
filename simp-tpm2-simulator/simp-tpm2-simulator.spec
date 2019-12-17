@@ -11,7 +11,7 @@ Summary: SIMP packaging of the IBM TPM 2.0 simulator
 %global _simulator_user simp-tpm2-sim
 
 License: ASL 2.0 and BSD
-URL:     https://github.com/simp/simp-tpm12-simulator
+URL:     https://github.com/simp/simp-tpm2-simulator
 ###https://sourceforge.net/projects/ibmswtpm2/
 ###https://sourceforge.net/projects/ibmswtpm2/files/ibmtpm%%{version}.tar.gz/download
 Source0: %{name}-%{version}.tar.gz
