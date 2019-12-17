@@ -1,15 +1,16 @@
 # copy this file into /etc/systemd/system
 [Unit]
-Description=TPM2 Simulator
+Description=SIMP Wrapper around the IBM TPM2 Simulator
 
 [Service]
-Type=dbus
+Type=simple
 Restart=no
-EnvironmentFile=-/etc/default/tpm2-simulator
-BusName=com.ibm.tpm2.tpm2-simulator
+Environment=LC_ALL=en_IE
+EnvironmentFile=-/etc/default/simp-tpm2-simulator
 StandardOutput=syslog
-ExecStart=/usr/local/bin/tpm2-simulator
-User=tss
+ExecStart=/usr/local/bin/simp-tpm2-simulator
+User=simp-tpm2-sim
+WorkingDirectory=/tmp
 
 [Install]
 WantedBy=multi-user.target
