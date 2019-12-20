@@ -16,7 +16,7 @@
 ## Overview
 
 Rake and config files to build/package newer versions of the [IBM TPM 2.0
-simulator][ibmswtpm2] as an EL7 RPM.
+simulator][ibmswtpm2] as an EL7 or EL8 RPM.
 
 ### This is a SIMP project
 
@@ -31,7 +31,7 @@ If you find any issues, please submit them to our [bug tracker][simp-jira].
 
 The TPM 2.0 simulator build process requires:
 
-* An EL7 host with:
+* An EL7 or EL8 host with:
   - `rpm`
   - `tar`
   - `curl` (for direct downloads)
@@ -82,20 +82,30 @@ This will install the simulator programs to utilize the TPM 2.0 simulator.
 To initialize and use the TPM simulator, issue the following commands:
 
 ```yaml
-# runuser tpm2sim --shell /bin/sh -c "cd /tmp; nohup \
-  /usr/local/bin/tpm2-simulator &> /tmp/tpm2-simulator.log &"
+# runuser simp-tpm2-sim --shell /bin/sh -c "cd /tmp; nohup \
+  /usr/local/bin/simp-tpm2-simulator &> /tmp/simp-tpm2-simulator.log &"
 # mkdir -p /etc/systemd/system/tpm2-abrmd.service.d
+On EL7 systems:
 # printf "[Service]\nExecStart=\nExecStart=/sbin/tpm2-abrmd -t socket" \
+  > /etc/systemd/system/tpm2-abrmd.service.d/override.conf
+On EL8 systems:
+# printf "[Service]\nExecStart=\nExecStart=/sbin/tpm2-abrmd --tcti mssim" \
   > /etc/systemd/system/tpm2-abrmd.service.d/override.conf
 # systemctl daemon-reload
 # systemctl start tpm2-abrmd
 ```
 
+On systems using SELinux (for example, check with the getenforce utility) the
+default service policy is too restrictive. See INSTALL.md at [TPM2 Access Broker
+& Resource Management Daemon][tpm2-abrmd] for more details.
+
+
 ## Development
 
 Please read our [Contribution Guide](http://simp-doc.readthedocs.io/en/stable/contributors_guide/index.html).
 
-[bundler]:   https://bundler.io
-[simp]:      https://www.simp-project.com/
-[simp-jira]: https://simp-project.atlassian.net/
-[ibmswtpm2]: https://sourceforge.net/projects/ibmswtpm2/
+[bundler]:    https://bundler.io
+[simp]:       https://www.simp-project.com/
+[simp-jira]:  https://simp-project.atlassian.net/
+[ibmswtpm2]:  https://sourceforge.net/projects/ibmswtpm2/
+[tpm2-abrmd]: https://github.com/tpm2-software/tpm2-abrmd
