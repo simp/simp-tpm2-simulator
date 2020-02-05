@@ -32,7 +32,13 @@ This version has been packaged by the SIMP team for %{dist}
 
 %build
 cd src/
+
+%if 0%{?rhel} < 8
+make -j4
+%else
 %make_build
+%endif
+
 cat %{SOURCE2} > ../LICENSE
 
 %install
