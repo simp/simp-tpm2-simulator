@@ -34,7 +34,8 @@ This version has been packaged by the SIMP team for %{dist}
 cd src/
 
 %if 0%{?rhel} < 8
-make -j4
+# On some simp EL7 build platforms, the standard `%make_build` macro is missing
+make "-j${RPM_BUILD_NCPUS:-$(/usr/bin/getconf _NPROCESSORS_ONLN)}"
 %else
 %make_build
 %endif
